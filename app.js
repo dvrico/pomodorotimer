@@ -23,12 +23,14 @@
         if ($scope.sessionLength < 0) {
           $scope.sessionLength = 0
         }
+        if ($scope.seesionLength > 59) {
+          $scope.sessionLength = 59
+        }
         $scope.timeLeft = $scope.sessionLength
       }
     }
 
     $scope.toggleTimer = function() {
-      console.log(1)
       if (!timerIsRunning) {
         if ($scope.currentName === 'Session') {
           $scope.currentLength = $scope.sessionLength
@@ -44,8 +46,15 @@
     function updateTimer() {
       secs -= 1
       console.log(secs)
-      $scope.timeLeft = secs
+      $scope.timeLeft = timeConverter(secs)
       console.log($scope.timeLeft)
+    }
+
+    function timeConverter(seconds) {
+      var d = Number(seconds)
+      var m = Math.floor(d % 3600 / 60)
+      var s = Math.floor(d % 3600 % 60)
+      return m + ":" + s
     }
 
   }]) // End of MainController

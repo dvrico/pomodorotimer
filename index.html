@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp" ng-controller="MainController as MainCtrl">
   <head>
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="master.css">
@@ -9,14 +9,14 @@
     <section>
       <div class="session">
         <div class="breakCtrl">
-          <p>break length</p>
-          <button class="minus">-</button><span class="time">timerplaceholder</span>
-          <button class="plus">+</button>
+          <p>{{MainCtrl.breakLength}}</p>
+          <button ng-click="MainCtrl.breakLengthChange(-1)"class="minus">-</button><span class="time">timerplaceholder</span>
+          <button ng-click="MainCtrl.breakLengthChange(1)"class="plus">+</button>
         </div>
         <div class="sessionCtrl">
-          <p>session length</p>
-          <button class="minus">-</button><span class="time">timerplaceholder</span>
-          <button  class="plus">+</button>
+          <p>{{MainCtrl.sessionLength}}</p>
+          <button ng-click="MainCtrl.sessionLengthChange(-1)" class="minus">-</button><span class="time">timerplaceholder</span>
+          <button ng-click="MainCtrl.sessionLengthChange(1)" class="plus">+</button>
         </div>
       </div>
     </section>

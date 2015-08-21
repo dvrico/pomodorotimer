@@ -11,22 +11,32 @@
     var secs = 60 * $scope.timeLeft
 
     $scope.breakLengthChange = function(time) {
-      $scope.breakLength += time
-      if ($scope.breakLength < 0) {
-        $scope.breakLength = 0
+      if (!timerIsRunning) {
+        $scope.breakLength += time
+        if ($scope.breakLength < 0) {
+          $scope.breakLength = 0
+        }
+        if ($scope.sessionName === 'Break!') {
+          $scope.timeLeft = $scope.breakLength
+          secs = 60 * $scope.breakLength
+        }
       }
+
     }
 
     $scope.sessionLengthChange = function(time) {
       if(!timerIsRunning) {
-        $scope.sessionLength += time
-        if ($scope.sessionLength < 0) {
-          $scope.sessionLength = 0
+        if($scope.sessionName === 'Session') {
+          $scope.sessionLength += time
+          if ($scope.sessionLength < 0) {
+            $scope.sessionLength = 0
+          }
+          if ($scope.seesionLength > 59) {
+            $scope.sessionLength = 59
+          }
+          $scope.timeLeft = $scope.sessionLength
+          secs = 60 * $scope.sessionLength
         }
-        if ($scope.seesionLength > 59) {
-          $scope.sessionLength = 59
-        }
-        $scope.timeLeft = $scope.sessionLength
       }
     }
 

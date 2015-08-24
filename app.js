@@ -41,7 +41,9 @@
     }
 
     $scope.toggleTimer = function() {
+      console.log('toggle timer')
       if (!timerIsRunning) {
+        console.log('timer start')
         if ($scope.currentName === 'Session') {
           $scope.currentLength = $scope.sessionLength
         } else {
@@ -50,6 +52,9 @@
 
         updateTimer()
         timerIsRunning = $interval(updateTimer, 1000)
+      } else {                                          // Pause Timer.
+        $interval.cancel(timerIsRunning)
+        timerIsRunning = false
       }
     }
 
@@ -58,6 +63,13 @@
       console.log(secs)
       $scope.timeLeft = timeConverter(secs)
       console.log($scope.timeLeft)
+      if ( secs < 0) {
+        if (sessionName === 'Break!') {
+          console.log('break time!')
+        } else {
+          sessionName = 'Break!'
+        }
+      }
     }
 
     function timeConverter(seconds) {

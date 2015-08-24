@@ -12,11 +12,11 @@
 
     $scope.breakLengthChange = function(time) {       // Change timer length only
       if (!timerIsRunning) {                          // when Timer is not running.
+        $scope.breakLength += time
+        if ($scope.breakLength < 1) {
+          $scope.breakLength = 1
+        }
         if ($scope.sessionName === 'Break!') {
-          $scope.breakLength += time
-          if ($scope.breakLength < 1) {
-            $scope.breakLength = 1
-          }
           $scope.timeLeft = $scope.breakLength
           secs = 60 * $scope.breakLength
         }
@@ -62,9 +62,7 @@
           secs = 60 * $scope.breakLength
         }
       } else {                                        // Guts of the Timer.
-        console.log(secs)
         $scope.timeLeft = timeConverter(secs)
-        console.log($scope.timeLeft)
       }
     }
 
@@ -82,6 +80,8 @@
 // TO-DO
 /*
  * COMPLETE! Add zero in front of single digit seconds
- * Find out what $scope.currentLength is all about, or get rid of it
+ * COMPLETE !Find out what $scope.currentLength is all about, or get rid of it
  * COMPLETE! Fix bug: After Break, Session reverts back to 1min timer and not it's set time
+ * Refactor breakLengthChange and sessionLengthChange into one function?
+ * CSS? D:
 */

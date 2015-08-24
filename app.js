@@ -2,8 +2,8 @@
   var myApp = angular.module('myApp', []);
 
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
-    $scope.breakLength = 5
-    $scope.sessionLength = 25
+    $scope.breakLength = 1
+    $scope.sessionLength = 1
     $scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
 
@@ -41,9 +41,7 @@
     }
 
     $scope.toggleTimer = function() {
-      console.log('toggle timer')
       if (!timerIsRunning) {
-        console.log('timer start')
         if ($scope.currentName === 'Session') {
           $scope.currentLength = $scope.sessionLength
         } else {
@@ -51,8 +49,8 @@
         }
 
         updateTimer()
-        timerIsRunning = $interval(updateTimer, 1000)
-      } else {                                          // Pause Timer.
+        timerIsRunning = $interval(updateTimer, 100)
+      } else {                                          // Pause and resume Timer.
         $interval.cancel(timerIsRunning)
         timerIsRunning = false
       }
@@ -60,15 +58,23 @@
 
     function updateTimer() {
       secs -= 1
-      console.log(secs)
-      $scope.timeLeft = timeConverter(secs)
-      console.log($scope.timeLeft)
       if ( secs < 0) {
-        if (sessionName === 'Break!') {
+        if ($scope.sessionName === 'Break!') {          // Switch over to Session Time.
           console.log('break time!')
-        } else {
-          sessionName = 'Break!'
+          $scope.sessionName = 'Session'
+          $scope.timeLeft = 60 * $scope.breakLength
+          secs = 60 * $scope.breakLength
+        } else {                                        // Switch over to Break Time.
+          $scope.sessionName = 'Break!'
+          //$scope.currentLength = $scope.breakLength
+          $scope.timeLeft = 60 * $scope.breakLength
+          //$scope.originalTime = $scope.breakLength // Used for the css gradients
+          secs = 60 * $scope.breakLength
         }
+      } else {                                          // Guts of the Timer.
+        console.log(secs)
+        $scope.timeLeft = timeConverter(secs)
+        console.log($scope.timeLeft)
       }
     }
 
@@ -82,3 +88,10 @@
   }]) // End of MainController
 
 }()); // End of IIFE
+
+// TO-DO
+/*
+ * Add zero in front of single digit seconds
+ * Find out what $scope.currentLength is all about, or get rid of it
+ * Fix bug: After Break, Session reverts back to 1min timer and not it's set time
+*/

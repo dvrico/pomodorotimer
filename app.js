@@ -10,26 +10,25 @@
     var timerIsRunning = false
     var secs = 60 * $scope.timeLeft
 
-    $scope.breakLengthChange = function(time) {
-      if (!timerIsRunning) {
-        $scope.breakLength += time
-        if ($scope.breakLength < 0) {
-          $scope.breakLength = 0
-        }
+    $scope.breakLengthChange = function(time) {       // Change timer length only
+      if (!timerIsRunning) {                          // when Timer is not running.
         if ($scope.sessionName === 'Break!') {
+          $scope.breakLength += time
+          if ($scope.breakLength < 1) {
+            $scope.breakLength = 1
+          }
           $scope.timeLeft = $scope.breakLength
           secs = 60 * $scope.breakLength
         }
       }
-
     }
 
-    $scope.sessionLengthChange = function(time) {
-      if(!timerIsRunning) {
+    $scope.sessionLengthChange = function(time) {     // Change timer length only
+      if(!timerIsRunning) {                           // when Timer is not running.
         if($scope.sessionName === 'Session') {
           $scope.sessionLength += time
-          if ($scope.sessionLength < 0) {
-            $scope.sessionLength = 0
+          if ($scope.sessionLength < 1) {
+            $scope.sessionLength = 1
           }
           if ($scope.seesionLength > 59) {
             $scope.sessionLength = 59
@@ -41,16 +40,10 @@
     }
 
     $scope.toggleTimer = function() {
-      if (!timerIsRunning) {
-        if ($scope.currentName === 'Session') {
-          $scope.currentLength = $scope.sessionLength
-        } else {
-          $scope.currentLength = $scope.breakLength
-        }
-
+      if (!timerIsRunning) {                          // Start timer.
         updateTimer()
         timerIsRunning = $interval(updateTimer, 100)
-      } else {                                          // Pause and resume Timer.
+      } else {                                        // Pause and resume Timer.
         $interval.cancel(timerIsRunning)
         timerIsRunning = false
       }
@@ -59,19 +52,16 @@
     function updateTimer() {
       secs -= 1
       if ( secs < 0) {
-        if ($scope.sessionName === 'Break!') {          // Switch over to Session Time.
-          console.log('break time!')
+        if ($scope.sessionName === 'Break!') {        // Switch over to Session Time.
           $scope.sessionName = 'Session'
-          $scope.timeLeft = 60 * $scope.breakLength
-          secs = 60 * $scope.breakLength
-        } else {                                        // Switch over to Break Time.
+          $scope.timeLeft = 60 * $scope.sessionLength
+          secs = 60 * $scope.sessionLength
+        } else {                                      // Switch over to Break Time.
           $scope.sessionName = 'Break!'
-          //$scope.currentLength = $scope.breakLength
           $scope.timeLeft = 60 * $scope.breakLength
-          //$scope.originalTime = $scope.breakLength // Used for the css gradients
           secs = 60 * $scope.breakLength
         }
-      } else {                                          // Guts of the Timer.
+      } else {                                        // Guts of the Timer.
         console.log(secs)
         $scope.timeLeft = timeConverter(secs)
         console.log($scope.timeLeft)
@@ -91,7 +81,7 @@
 
 // TO-DO
 /*
- * Add zero in front of single digit seconds
+ * COMPLETE! Add zero in front of single digit seconds
  * Find out what $scope.currentLength is all about, or get rid of it
- * Fix bug: After Break, Session reverts back to 1min timer and not it's set time
+ * COMPLETE! Fix bug: After Break, Session reverts back to 1min timer and not it's set time
 */

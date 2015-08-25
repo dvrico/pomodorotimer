@@ -14,11 +14,19 @@ h1 {
   display: block;
   background-color: #E35656;
   margin: 0 auto;
-  color: black;
   text-align: center;
   font-family: 'Lobster', cursive;
   color: #320000;
   font-size: 5em;
+}
+
+.pomodoroCounter {
+  display: flex; 
+  background-color: #320000;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 .header {

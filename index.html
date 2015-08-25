@@ -6,21 +6,21 @@
   </head>
   <body>
     <h1>Pomodoro!</h1>
-    <section>
+    <section class="header">
       <div class="session">
         <div class="breakCtrl">
-          <p>{{breakLength}}</p>
-          <button ng-click="breakLengthChange(-1)"class="minus">-</button><span class="time">Break Length</span>
-          <button ng-click="breakLengthChange(1)"class="plus">+</button>
+          <p class="number">{{breakLength}}</p>
+          <button ng-click="breakLengthChange(-1)" class="minus">-</button><span class="time">  Break Length</span>
+          <button ng-click="breakLengthChange(1)" class="plus">+</button>
         </div>
         <div class="sessionCtrl">
-          <p>{{sessionLength}}</p>
+          <p class="number">{{sessionLength}}</p>
           <button ng-click="sessionLengthChange(-1)" class="minus">-</button><span class="time">Session Length</span>
           <button ng-click="sessionLengthChange(1)" class="plus">+</button>
         </div>
       </div>
     </section>
-    <section ng-click="toggleTimer()">
+    <section ng-click="toggleTimer()" class="section">
       <div class="timer">
         <p class="title">{{sessionName}}</p>
         <p>{{timeLeft}}</p><span class="fill"></span>

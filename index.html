@@ -23,7 +23,7 @@
     <section ng-click="toggleTimer()" class="section">
       <div class="timer">
         <p class="title">{{sessionName}}</p>
-        <p>{{timeLeft}}</p><span class="fill"></span>
+        <p>{{timeLeft}}</p><span ng-style="{'height':fillHeight, 'background':fillColor }"class="fill"></span>
       </div>
     </section>
 

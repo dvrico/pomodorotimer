@@ -2,13 +2,17 @@
   var myApp = angular.module('myApp', []);
 
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
+    // Variables for HTML
     $scope.breakLength = 1
     $scope.sessionLength = 1
     $scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
-
+    // Variables for Timer and Angular/CSS fill effects
     var timerIsRunning = false
     var secs = 60 * $scope.timeLeft
+    $scope.fillHeight = '0%'
+    $scope.originalTime = $scope.sessionLength        // This is needed here for
+                                                      // the first round of css effects.
 
     $scope.breakLengthChange = function(time) {       // Change timer length only
       if (!timerIsRunning) {                          // when Timer is not running.
@@ -52,17 +56,32 @@
     function updateTimer() {
       secs -= 1
       if ( secs < 0) {
+
         if ($scope.sessionName === 'Break!') {        // Switch over to Session Time.
           $scope.sessionName = 'Session'
           $scope.timeLeft = 60 * $scope.sessionLength
+          $scope.originalTime = $scope.sessionLength
           secs = 60 * $scope.sessionLength
         } else {                                      // Switch over to Break Time.
           $scope.sessionName = 'Break!'
           $scope.timeLeft = 60 * $scope.breakLength
+          $scope.originalTime = $scope.breakLength
           secs = 60 * $scope.breakLength
         }
-      } else {                                        // Guts of the Timer.
-        $scope.timeLeft = timeConverter(secs)
+      } else {
+        console.log($scope.sessionName)
+        if ($scope.sessionName === 'Break!') {
+          $scope.fillColor = '#000000'
+        } else {
+          $scope.fillColor = '#99CC00'
+        }
+        $scope.timeLeft = timeConverter(secs)         // Guts of the Timer.
+                                                      // And Angular/CSS fill effects.
+        var denom = 60 * $scope.originalTime
+        var perc = Math.abs((secs / denom) * 100 - 100)
+        console.log(denom)
+        console.log(perc)
+        $scope.fillHeight = perc + '%'
       }
     }
 
@@ -79,9 +98,8 @@
 
 // TO-DO
 /*
- * COMPLETE! Add zero in front of single digit seconds
- * COMPLETE !Find out what $scope.currentLength is all about, or get rid of it
- * COMPLETE! Fix bug: After Break, Session reverts back to 1min timer and not it's set time
  * Refactor breakLengthChange and sessionLengthChange into one function?
- * CSS? D:
+ * LogoMakr Tomato top
+ * Make native desktop app pretty
+ * Add the ability to add a whole pomodoro session (3 pomodoro's worth of work)
 */

@@ -2,17 +2,19 @@
   var myApp = angular.module('myApp', []);
 
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
+
     // Variables for HTML
     $scope.breakLength = 1
     $scope.sessionLength = 1
     $scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
+
     // Variables for Timer and Angular/CSS fill effects
     var timerIsRunning = false
     var secs = 60 * $scope.timeLeft
     $scope.fillHeight = '0%'
-    $scope.originalTime = $scope.sessionLength        // This is needed here for
-                                                      // the first round of css effects.
+    $scope.originalTime = $scope.sessionLength        // This is needed here for the
+                                                      // first round of css fill effects.
 
     $scope.breakLengthChange = function(time) {       // Change timer length only
       if (!timerIsRunning) {                          // when Timer is not running.
@@ -38,6 +40,7 @@
             $scope.sessionLength = 59
           }
           $scope.timeLeft = $scope.sessionLength
+          $scope.originalTime = $scope.sessionLength
           secs = 60 * $scope.sessionLength
         }
       }

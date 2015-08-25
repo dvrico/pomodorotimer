@@ -74,9 +74,9 @@
       } else {
         console.log($scope.sessionName)
         if ($scope.sessionName === 'Break!') {
-          $scope.fillColor = '#000000'
+          $scope.fillColor = '#fff'
         } else {
-          $scope.fillColor = '#99CC00'
+          $scope.fillColor = '#fff'
         }
         $scope.timeLeft = timeConverter(secs)         // Guts of the Timer.
                                                       // And Angular/CSS fill effects.

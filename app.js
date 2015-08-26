@@ -8,6 +8,10 @@
     $scope.sessionLength = 1
     $scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
+    $scope.sessionCount = 0
+    $scope.sessionsCompleted = 0
+    $scope.sessions = []
+    $scope.started = false
 
     // Variables for Timer and Angular/CSS fill effects
     var timerIsRunning = false
@@ -28,7 +32,7 @@
         }
       }
     }
-
+    
     $scope.sessionLengthChange = function(time) {     // Change timer length only
       if(!timerIsRunning) {                           // when Timer is not running.
         if($scope.sessionName === 'Session') {
@@ -46,8 +50,15 @@
       }
     }
 
-    $scope.toggleTimer = function() {
-      if (!timerIsRunning) {                          // Start timer.
+    $scope.setSessions = function(n) {
+      $scope.sessionCount = n
+      console.log($scope.sessionCount)
+    }
+
+    $scope.toggleTimer = function() {                 // Start timer.
+      if (!timerIsRunning) {
+        $scope.started = true
+        $scope.sessions = Array($scope.sessionCount)
         updateTimer()
         timerIsRunning = $interval(updateTimer, 100)
       } else {                                        // Pause and resume Timer.
@@ -61,6 +72,9 @@
       if ( secs < 0) {
 
         if ($scope.sessionName === 'Break!') {        // Switch over to Session Time.
+          $scope.sessions[$scope.sessionsCompleted] = true
+          $scope.sessionsCompleted++
+          console.log($scope.sessions);
           $scope.sessionName = 'Session'
           $scope.timeLeft = 60 * $scope.sessionLength
           $scope.originalTime = $scope.sessionLength
@@ -82,8 +96,8 @@
                                                       // And Angular/CSS fill effects.
         var denom = 60 * $scope.originalTime
         var perc = Math.abs((secs / denom) * 100 - 100)
-        console.log(denom)
-        console.log(perc)
+        // console.log(denom)
+        // console.log(perc)
         $scope.fillHeight = perc + '%'
       }
     }

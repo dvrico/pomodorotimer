@@ -56,7 +56,7 @@
     }
 
     $scope.toggleTimer = function() {                 // Start timer.
-      if (!timerIsRunning) {
+      if (!timerIsRunning && $scope.sessionCount) {
         $scope.started = true
         $scope.sessions = Array($scope.sessionCount)
         updateTimer()

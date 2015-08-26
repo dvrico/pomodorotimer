@@ -18,7 +18,6 @@
       <div ng-show="started">
         <img ng-src="{{s ? 'images/Xtomato.png' : 'images/colorTomato.png'}}" ng-repeat="s in sessions track by $index" />
       </div>
-
     </div>
 
     <section class="header">
@@ -38,15 +37,15 @@
     <section ng-click="toggleTimer()" class="section">
       <div class="timer">
 
-        <div ng-hide="started">
-
-          <div ng-hide="sessionCount">
+        <div ng-hide="started" class="settings">
+          <div ng-hide="sessionCount" >
             <p>Choose your settings before starting!</p>
           </div>
-          <div ng-show="sessionCount">
-            <p>Go!</p>
+          <div ng-show="sessionCount" id="startButton">
+            <p>Start!</p>
           </div>
         </div>
+
         <div ng-show="started">
           <p class="title">{{sessionName}}</p>
           <p>{{timeLeft}}</p><span ng-style="{'height':fillHeight, 'background':fillColor }"class="fill"></span>

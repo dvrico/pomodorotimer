@@ -71,7 +71,19 @@ h1 {
 .section {
   background-color: #E35656;
   height: 100%;
-  color: #000;
+  color: #320000;
+}
+
+.section .settings {
+  text-align: center;
+  font-size: .6em;
+  color: #320000;
+  padding-top: 2em;
+}
+
+.section .settings #startButton {
+  padding-top: .3em;
+  font-size: 2em;
 }
 
 .section .title {

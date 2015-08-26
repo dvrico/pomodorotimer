@@ -32,7 +32,7 @@
         }
       }
     }
-    
+
     $scope.sessionLengthChange = function(time) {     // Change timer length only
       if(!timerIsRunning) {                           // when Timer is not running.
         if($scope.sessionName === 'Session') {
@@ -87,11 +87,7 @@
         }
       } else {
         console.log($scope.sessionName)
-        if ($scope.sessionName === 'Break!') {
-          $scope.fillColor = '#fff'
-        } else {
-          $scope.fillColor = '#fff'
-        }
+        $scope.fillColor = '#E3E356'
         $scope.timeLeft = timeConverter(secs)         // Guts of the Timer.
                                                       // And Angular/CSS fill effects.
         var denom = 60 * $scope.originalTime

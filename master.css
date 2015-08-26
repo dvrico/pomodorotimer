@@ -21,7 +21,7 @@ h1 {
 }
 
 .pomodoroCounter {
-  display: flex; 
+  display: flex;
   background-color: #320000;
   justify-content: center;
   text-align: center;

@@ -98,11 +98,3 @@
   }]) // End of MainController
 
 }()); // End of IIFE
-
-// TO-DO
-/*
- * Refactor breakLengthChange and sessionLengthChange into one function?
- * LogoMakr Tomato top
- * Make native desktop app pretty
- * Add the ability to add a whole pomodoro session (3 pomodoro's worth of work)
-*/

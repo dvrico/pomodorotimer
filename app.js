@@ -8,10 +8,11 @@
     $scope.sessionLength = 1
     $scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
+    // Variables for the amount of pomodoro sessions left/completed.
     $scope.sessionCount = 0
     $scope.sessionsCompleted = 0
     $scope.sessions = []
-    $scope.started = false
+    $scope.timerStarted = false
 
     // Variables for Timer and Angular/CSS fill effects
     var timerIsRunning = false
@@ -57,7 +58,7 @@
 
     $scope.toggleTimer = function() {                 // Start timer.
       if (!timerIsRunning && $scope.sessionCount) {
-        $scope.started = true
+        $scope.timerStarted = true
         $scope.sessions = Array($scope.sessionCount)
         updateTimer()
         timerIsRunning = $interval(updateTimer, 100)
@@ -72,21 +73,24 @@
       if ( secs < 0) {
 
         if ($scope.sessionName === 'Break!') {        // Switch over to Session Time.
-          $scope.sessions[$scope.sessionsCompleted] = true
-          $scope.sessionsCompleted++
-          console.log($scope.sessions);
+          // Ad
+
+          console.log($scope.sessions)
           $scope.sessionName = 'Session'
           $scope.timeLeft = 60 * $scope.sessionLength
           $scope.originalTime = $scope.sessionLength
           secs = 60 * $scope.sessionLength
         } else {                                      // Switch over to Break Time.
+          // Cross out a tomato in the current set.
+          $scope.sessions[$scope.sessionsCompleted] = true
+          $scope.sessionsCompleted++
+          
           $scope.sessionName = 'Break!'
           $scope.timeLeft = 60 * $scope.breakLength
           $scope.originalTime = $scope.breakLength
           secs = 60 * $scope.breakLength
         }
       } else {
-        console.log($scope.sessionName)
         $scope.fillColor = '#E3E356'
         $scope.timeLeft = timeConverter(secs)         // Guts of the Timer.
                                                       // And Angular/CSS fill effects.

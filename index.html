@@ -8,14 +8,14 @@
     <h1>Pomodoro!</h1>
 
     <div class="pomodoroCounter">
-      <div ng-hide="started">
-        <img src="images/tomatoOne.png" ng-click="setSessions(1)" ng-class="{selected:sessionCount === 1}"/>
-        <img src="images/tomatoTwo.png" ng-click="setSessions(2)" ng-class="{selected:sessionCount === 2}"/>
-        <img src="images/tomatoThree.png" ng-click="setSessions(3)" ng-class="{selected:sessionCount === 3}"/>
-        <img src="images/tomatoFour.png" ng-click="setSessions(4)" ng-class="{selected:sessionCount === 4}"/>
+      <div ng-hide="timerStarted">
+        <img src="images/tomatoOne.png" ng-click="setSessions(1)" />
+        <img src="images/tomatoTwo.png" ng-click="setSessions(2)" />
+        <img src="images/tomatoThree.png" ng-click="setSessions(3)" />
+        <img src="images/tomatoFour.png" ng-click="setSessions(4)" />
       </div>
 
-      <div ng-show="started">
+      <div ng-show="timerStarted">
         <img ng-src="{{s ? 'images/Xtomato.png' : 'images/colorTomato.png'}}" ng-repeat="s in sessions track by $index" />
       </div>
     </div>
@@ -37,7 +37,7 @@
     <section ng-click="toggleTimer()" class="section">
       <div class="timer">
 
-        <div ng-hide="started" class="settings">
+        <div ng-hide="timerStarted" class="settings">
           <div ng-hide="sessionCount" >
             <p>Choose your settings before starting!</p>
           </div>
@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div ng-show="started">
+        <div ng-show="timerStarted">
           <p class="title">{{sessionName}}</p>
           <p>{{timeLeft}}</p><span ng-style="{'height':fillHeight, 'background':fillColor }"class="fill"></span>
         </div>

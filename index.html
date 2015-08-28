@@ -9,7 +9,7 @@
 
     <div class="pomodoroCounter">
       <div ng-hide="timerStarted">
-        <img src="images/tomatoOne.png" ng-click="setSessions(1)" />
+        <img src="images/tomatoOne.png" ng-click="setSessions(1)"  />
         <img src="images/tomatoTwo.png" ng-click="setSessions(2)" />
         <img src="images/tomatoThree.png" ng-click="setSessions(3)" />
         <img src="images/tomatoFour.png" ng-click="setSessions(4)" />
@@ -43,6 +43,9 @@
           </div>
           <div ng-show="sessionCount" id="startButton">
             <p>Start!</p>
+          </div>
+          <div ng-show="timerDone">
+            <p>All done!</p>
           </div>
         </div>
 

@@ -63,10 +63,12 @@
         $scope.sessions = Array($scope.sessionCount)
         updateTimer()
         timerIsRunning = $interval(updateTimer, 100)
-      } else {                                        // Pause and resume Timer.
-        $interval.cancel(timerIsRunning)
-        timerIsRunning = false
-      }
+      } //else {                                      // Pause and resume Timer.
+      //   if (!$scope.sessionOver) {
+      //     $interval.cancel(timerIsRunning)
+      //     timerIsRunning = false
+      //   }
+      // }
     }
 
     function updateTimer() {

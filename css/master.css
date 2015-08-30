@@ -86,6 +86,11 @@ h1 {
   font-size: 2em;
 }
 
+.section .settings #endMessage {
+  padding-top: .6em;
+  font-size: 1.5em;
+}
+
 .section .title {
   text-align: center;
   line-height: 180px;

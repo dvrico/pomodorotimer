@@ -13,7 +13,7 @@
     $scope.sessionsCompleted = 0
     $scope.sessions = []
     $scope.timerStarted = false
-    $scope.timerDone = false
+    $scope.sessionOver = false
 
     // Variables for Timer and Angular/CSS fill effects
     var timerIsRunning = false
@@ -79,15 +79,20 @@
           $scope.originalTime = $scope.sessionLength
           secs = 60 * $scope.sessionLength
         } else {                                      // Switch over to Break Time.
+
           // Cross out a tomato in the current set.
           $scope.sessions[$scope.sessionsCompleted] = true
           $scope.sessionsCompleted++
           console.log($scope.sessionsCompleted)
 
-          // if ($scope.sessionsCompleted === $scope.sessionCount) {
-          //   timerStarted = false
-          //   timerDone = true
-          // }
+          // Ends the session.
+          if ($scope.sessionsCompleted === $scope.sessionCount) {
+            console.log($scope.sessionsCompleted === $scope.sessionCount)
+            $scope.timerStarted = false
+            $scope.sessionOver = true
+            $interval.cancel(timerIsRunning)
+            timerIsRunning = false
+          }
 
           $scope.sessionName = 'Break!'
           $scope.timeLeft = 60 * $scope.breakLength
@@ -100,8 +105,8 @@
                                                       // And Angular/CSS fill effects.
         var denom = 60 * $scope.originalTime
         var perc = Math.abs((secs / denom) * 100 - 100)
-        console.log(denom)
-        console.log(perc)
+        // console.log(denom)
+        // console.log(perc)
         $scope.fillHeight = perc + '%'
       }
     }

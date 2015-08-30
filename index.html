@@ -41,11 +41,13 @@
           <div ng-hide="sessionCount" >
             <p>Choose your settings before starting!</p>
           </div>
-          <div ng-show="sessionCount" id="startButton">
-            <p>Start!</p>
-          </div>
-          <div ng-show="timerDone">
-            <p>All done!</p>
+          <div ng-show="sessionCount">
+            <div ng-hide="sessionOver" id="startButton">
+              <p>Start!</p>
+            </div>
+            <div ng-show="sessionOver" id="endMessage">
+              <p>All done!</p>
+            </div>
           </div>
         </div>
 

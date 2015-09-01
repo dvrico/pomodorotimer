@@ -74,12 +74,22 @@
     }
 
     $scope.toggleTimer = function() {                 // Start timer.
-      if (!sessionTimer.isRunning && $scope.sessionCount) {
+      if (!$scope.sessionCount) return;
+      if (currentTimer.isRunning) {
+        $interval.cancel(currentTimer.intervalId)
+        currentTimer.isRunning = false
+      } else {
         $scope.displayTimerStarted = true
         $scope.sessions = Array($scope.sessionCount)
         updateTimer()
-        sessionTimer.IsRunning = $interval(updateTimer, 100)
-      } //else {                                      // Pause and resume Timer.
+        currentTimer.isRunning = true
+        currentTimer.intervalId = $interval(updateTimer, 100)
+      }
+
+
+      //if (!breakTimer.isRunning &&)
+
+      //else {                                      // Pause and resume Timer.
       //   if (!$scope.displaySessionOver) {
       //     $interval.cancel(timerIsRunning)
       //     timerIsRunning = false
@@ -88,15 +98,20 @@
     }
 
     function updateTimer() {
-      secs -= 1
-      if ( secs < 0) {
+      //secs -= 1
+      currentTimer.tick()
+      if (currentTimer.timeLeft < 0) {
+          //if no time left, did we finish?
+        //if (currentTimer.name === 'Break!') {        // Switch over to Session Time.
+          //Method switchTimer function out of the class
+          //Juggle states = application level functions
+          //Data for single objects/etc, use methods
 
-        if ($scope.sessionName === 'Break!') {        // Switch over to Session Time.
           $scope.sessionName = 'Session'
           $scope.timeLeft = 60 * $scope.sessionLength
           $scope.originalTime = $scope.sessionLength
           secs = 60 * $scope.sessionLength
-        } else {                                      // Switch over to Break Time.
+        //} else {                                      // Switch over to Break Time.
 
           // Cross out a tomato in the current set.
           $scope.sessions[$scope.sessionsCompleted] = true
@@ -116,7 +131,7 @@
           $scope.timeLeft = 60 * $scope.breakLength
           $scope.originalTime = $scope.breakLength
           secs = 60 * $scope.breakLength
-        }
+      
       } else {
         $scope.fillColor = '#E3E356'
         $scope.timeLeft = timeConverter(secs)         // Guts of the Timer.
@@ -136,10 +151,7 @@
     this.sessionLength = sessionLength
     this.timeLeft = sessionLength
     this.isRunning = false
-  }
-
-  Timer.prototype.run = function() {
-    this.isRunning = true
+    this.intervalId = null
   }
 
   Timer.prototype.tick = function() {

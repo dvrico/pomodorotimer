@@ -4,51 +4,67 @@
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
 
     // Variables for HTML
-    $scope.breakLength = 1
-    $scope.sessionLength = 1
-    $scope.timeLeft = $scope.sessionLength
+    // $scope.breakLength = 1
+    // $scope.sessionLength = 1
+    var defaultBreakLength = 60
+    var defaultSessionLength = 60
+    //$scope.timeLeft = $scope.sessionLength
     $scope.sessionName = 'Session'
     // Variables for the amount of pomodoro sessions left/completed.
     $scope.sessionCount = 0
     $scope.sessionsCompleted = 0
     $scope.sessions = []
-    $scope.timerStarted = false
-    $scope.sessionOver = false
+    $scope.displayTimerStarted = false
+    $scope.displaySessionOver = false
+
+    //Timer Objects and their display equivalents.
+    var sessionTimer = new Timer('Session', defaultSessionLength)
+    $scope.displaySessionLength = sessionTimer.display(defaultSessionLength)
+
+    var breakTimer = new Timer('Break!', defaultBreakLength)
+    $scope.displayBreakLength = breakTimer.display(defaultBreakLength)
+
+    var currentTimer = sessionTimer
 
     // Variables for Timer and Angular/CSS fill effects
-    var timerIsRunning = false
-    var secs = 60 * $scope.timeLeft
+    //var timerIsRunning = false
+    //var secs = 60 * $scope.timeLeft
     $scope.fillHeight = '0%'
     $scope.originalTime = $scope.sessionLength        // This is needed here for the
                                                       // first round of css fill effects.
 
     $scope.breakLengthChange = function(time) {       // Change timer length only
-      if (!timerIsRunning) {                          // when Timer is not running.
-        $scope.breakLength += time
-        if ($scope.breakLength < 1) {
-          $scope.breakLength = 1
-        }
-        if ($scope.sessionName === 'Break!') {
-          $scope.timeLeft = $scope.breakLength
-          secs = 60 * $scope.breakLength
-        }
+      if (!breakTimer.isRunning) {
+        breakTimer.incrementSessionLength(time)
+        $scope.displayBreakLength = breakTimer.display(breakTimer.sessionLength)
+        console.log(breakTimer.sessionLength)
+        // if ($scope.breakLength < 1) {
+        //   $scope.breakLength = 1
+        // }
+        // if ($scope.sessionName === 'Break!') {
+        //   $scope.timeLeft = $scope.breakLength
+        //   secs = 60 * $scope.breakLength
+        // }
       }
     }
 
     $scope.sessionLengthChange = function(time) {     // Change timer length only
-      if(!timerIsRunning) {                           // when Timer is not running.
-        if($scope.sessionName === 'Session') {
-          $scope.sessionLength += time
-          if ($scope.sessionLength < 1) {
-            $scope.sessionLength = 1
-          }
-          if ($scope.seesionLength > 59) {
-            $scope.sessionLength = 59
-          }
-          $scope.timeLeft = $scope.sessionLength
-          $scope.originalTime = $scope.sessionLength
-          secs = 60 * $scope.sessionLength
-        }
+      if(!sessionTimer.isRunning) {
+        sessionTimer.incrementSessionLength(time)
+        $scope.displaySessionLength = sessionTimer.display(sessionTimer.sessionLength)
+        console.log(sessionTimer.sessionLength)
+        // if($scope.sessionName === 'Session') {
+        //   $scope.sessionLength += time
+        //   if ($scope.sessionLength < 1) {
+        //     $scope.sessionLength = 1
+        //   }
+        //   if ($scope.seesionLength > 59) {
+        //     $scope.sessionLength = 59
+        //   }
+        //   $scope.timeLeft = $scope.sessionLength
+        //   $scope.originalTime = $scope.sessionLength
+        //   secs = 60 * $scope.sessionLength
+        // }
       }
     }
 
@@ -58,13 +74,13 @@
     }
 
     $scope.toggleTimer = function() {                 // Start timer.
-      if (!timerIsRunning && $scope.sessionCount) {
-        $scope.timerStarted = true
+      if (!sessionTimer.isRunning && $scope.sessionCount) {
+        $scope.displayTimerStarted = true
         $scope.sessions = Array($scope.sessionCount)
         updateTimer()
-        timerIsRunning = $interval(updateTimer, 100)
+        sessionTimer.IsRunning = $interval(updateTimer, 100)
       } //else {                                      // Pause and resume Timer.
-      //   if (!$scope.sessionOver) {
+      //   if (!$scope.displaySessionOver) {
       //     $interval.cancel(timerIsRunning)
       //     timerIsRunning = false
       //   }
@@ -90,8 +106,8 @@
           // Ends the session.
           if ($scope.sessionsCompleted === $scope.sessionCount) {
             console.log($scope.sessionsCompleted === $scope.sessionCount)
-            $scope.timerStarted = false
-            $scope.sessionOver = true
+            $scope.displayTimerStarted = false
+            $scope.displaySessionOver = true
             $interval.cancel(timerIsRunning)
             timerIsRunning = false
           }
@@ -113,13 +129,53 @@
       }
     }
 
-    function timeConverter(seconds) {
-      var d = Number(seconds)
-      var m = Math.floor(d % 3600 / 60)
-      var s = Math.floor(d % 3600 % 60)
-      return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
-    }
-
   }]) // End of MainController
+
+  function Timer(name, sessionLength) {
+    this.name = name
+    this.sessionLength = sessionLength
+    this.timeLeft = sessionLength
+    this.isRunning = false
+  }
+
+  Timer.prototype.run = function() {
+    this.isRunning = true
+  }
+
+  Timer.prototype.tick = function() {
+    if (this.isRunning) {
+      this.timeLeft--
+    }
+  }
+
+  Timer.prototype.pause = function() {
+    this.isRunning = false
+  }
+
+  Timer.prototype.reset = function() {
+    this.timeLeft = this.sessionLength
+  }
+
+  Timer.prototype.format = function(seconds) {
+    var d = Number(seconds)
+    var m = Math.floor(d % 3600 / 60)
+    var s = Math.floor(d % 3600 % 60)
+    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  Timer.prototype.display = function(timeOfSession) {
+    return this.format(timeOfSession)
+  }
+
+  Timer.prototype.incrementSessionLength = function(time) {
+    this.sessionLength += (time * 60)
+    if (this.sessionLength <= 0)  {
+      this.sessionLength = 60
+    }
+    if (this.sessionLength >= 3540) {
+      this.sessionLength = 3540
+    }
+    this.timeLeft = this.sessionLength
+  }
 
 }()); // End of IIFE

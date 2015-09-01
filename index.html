@@ -8,14 +8,14 @@
     <h1>Pomodoro!</h1>
 
     <div class="pomodoroCounter">
-      <div ng-hide="timerStarted">
+      <div ng-hide="displayTimerStarted">
         <img src="images/tomatoOne.png" ng-click="setSessions(1)"  />
         <img src="images/tomatoTwo.png" ng-click="setSessions(2)" />
         <img src="images/tomatoThree.png" ng-click="setSessions(3)" />
         <img src="images/tomatoFour.png" ng-click="setSessions(4)" />
       </div>
 
-      <div ng-show="timerStarted">
+      <div ng-show="displayTimerStarted">
         <img ng-src="{{s ? 'images/Xtomato.png' : 'images/colorTomato.png'}}" ng-repeat="s in sessions track by $index" />
       </div>
     </div>
@@ -23,12 +23,12 @@
     <section class="header">
       <div class="session">
         <div class="breakCtrl">
-          <p class="number">{{breakLength}}</p>
+          <p class="number">{{displayBreakLength}}</p>
           <button ng-click="breakLengthChange(-1)" class="minus">-</button><span class="time">  Break Length</span>
           <button ng-click="breakLengthChange(1)" class="plus">+</button>
         </div>
         <div class="sessionCtrl">
-          <p class="number">{{sessionLength}}</p>
+          <p class="number">{{displaySessionLength}}</p>
           <button ng-click="sessionLengthChange(-1)" class="minus">-</button><span class="time">Session Length</span>
           <button ng-click="sessionLengthChange(1)" class="plus">+</button>
         </div>
@@ -37,21 +37,21 @@
     <section ng-click="toggleTimer()" class="section">
       <div class="timer">
 
-        <div ng-hide="timerStarted" class="settings">
+        <div ng-hide="displayTimerStarted" class="settings">
           <div ng-hide="sessionCount" >
             <p>Choose your settings before starting!</p>
           </div>
           <div ng-show="sessionCount">
-            <div ng-hide="sessionOver" id="startButton">
+            <div ng-hide="displaySessionOver" id="startButton">
               <p>Start!</p>
             </div>
-            <div ng-show="sessionOver" id="endMessage">
+            <div ng-show="displaySessionOver" id="endMessage">
               <p>All done!</p>
             </div>
           </div>
         </div>
 
-        <div ng-show="timerStarted">
+        <div ng-show="displayTimerStarted">
           <p class="title">{{sessionName}}</p>
           <p>{{timeLeft}}</p><span ng-style="{'height':fillHeight, 'background':fillColor }"class="fill"></span>
         </div>

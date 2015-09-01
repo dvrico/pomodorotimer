@@ -3,17 +3,13 @@
 
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
 
-    // Variables for HTML
-    // $scope.breakLength = 1
-    // $scope.sessionLength = 1
     var defaultBreakLength = 60
     var defaultSessionLength = 60
-    //$scope.displayTimeLeft = $scope.sessionLength
 
     // Variables for the amount of pomodoro sessions left/completed.
-    $scope.sessionCount = 0
-    $scope.sessionsCompleted = 0
-    $scope.sessions = []
+    $scope.displayPomodoroSetCount = 0
+    $scope.pomodoroSessionsCompleted = 0
+    $scope.pomodoroSessionsArray = []
     $scope.displayTimerStarted = false
     $scope.displaySessionOver = false
 
@@ -28,124 +24,60 @@
     $scope.displaySessionName = currentTimer.name
 
     // Variables for Timer and Angular/CSS fill effects
-    //var timerIsRunning = false
-    //var secs = 60 * $scope.displayTimeLeft
     $scope.fillHeight = '0%'
-    $scope.colorFillTime = $scope.sessionLength        // This is needed here for the
-                                                      // first round of css fill effects.
+    $scope.colorFillTime = currentTimer.sessionLength
 
-    $scope.breakLengthChange = function(time) {       // Change timer length only
+
+    $scope.breakLengthChange = function(time) {
       if (!breakTimer.isRunning) {
         breakTimer.incrementSessionLength(time)
         $scope.displayBreakLength = breakTimer.display(breakTimer.sessionLength)
+        $scope.colorFillTime = currentTimer.sessionLength
         console.log(breakTimer.sessionLength)
-        // if ($scope.breakLength < 1) {
-        //   $scope.breakLength = 1
-        // }
-        // if ($scope.displaySessionName === 'Break!') {
-        //   $scope.displayTimeLeft = $scope.breakLength
-        //   secs = 60 * $scope.breakLength
-        // }
       }
     }
 
-    $scope.sessionLengthChange = function(time) {     // Change timer length only
+    $scope.sessionLengthChange = function(time) {
       if(!sessionTimer.isRunning) {
         sessionTimer.incrementSessionLength(time)
         $scope.displaySessionLength = sessionTimer.display(sessionTimer.sessionLength)
+        $scope.colorFillTime = currentTimer.sessionLength
         console.log(sessionTimer.sessionLength)
-        // if($scope.displaySessionName === 'Session') {
-        //   $scope.sessionLength += time
-        //   if ($scope.sessionLength < 1) {
-        //     $scope.sessionLength = 1
-        //   }
-        //   if ($scope.seesionLength > 59) {
-        //     $scope.sessionLength = 59
-        //   }
-        //   $scope.displayTimeLeft = $scope.sessionLength
-        //   $scope.colorFillTime = $scope.sessionLength
-        //   secs = 60 * $scope.sessionLength
-        // }
       }
     }
 
     $scope.setSessions = function(n) {
-      $scope.sessionCount = n
-      console.log($scope.sessionCount)
+      $scope.displayPomodoroSetCount = n
+      console.log($scope.displayPomodoroSetCount)
     }
 
     $scope.toggleTimer = function() {                 // Pause and start the timer.
-      if (!$scope.sessionCount) return;
+      if (!$scope.displayPomodoroSetCount) return;
       if (currentTimer.isRunning) {
         $interval.cancel(currentTimer.intervalId)
         currentTimer.isRunning = false
       } else {
+        console.log(currentTimer.name)
         $scope.displayTimerStarted = true
-        $scope.sessions = Array($scope.sessionCount)
+        $scope.pomodoroSessionsArray = Array($scope.displayPomodoroSetCount)
         updateTimer()
         currentTimer.isRunning = true
         currentTimer.intervalId = $interval(updateTimer, 100)
       }
-
-
-      //if (!breakTimer.isRunning &&)
-
-      //else {                                      // Pause and resume Timer.
-      //   if (!$scope.displaySessionOver) {
-      //     $interval.cancel(timerIsRunning)
-      //     timerIsRunning = false
-      //   }
-      // }
     }
 
     function updateTimer() {
-      //secs -= 1
       currentTimer.tick()
       if (currentTimer.timeLeft < 0) {
-
         if (currentTimer.name === 'Session') crossOutPomodoro();
-        //if no time left, did we finish?
-        if ($scope.sessionsCompleted === $scope.sessionCount) finish();
-          //Method switchTimer function out of the class
-          //Juggle states = application level functions
-          //Data for single objects/etc, use methods
+        if ($scope.pomodoroSessionsCompleted === $scope.displayPomodoroSetCount) finish();
+
         switchTimer()
         $scope.colorFillTime = currentTimer.sessionLength
-          //secs = 60 * $scope.sessionLength
-        //} else {                                      // Switch over to Break Time.
-
-          // Cross out a tomato in the current set.
-          // $scope.sessions[$scope.sessionsCompleted] = true
-          // $scope.sessionsCompleted++
-          // console.log($scope.sessionsCompleted)
-
-          // Ends the session.
-          // if ($scope.sessionsCompleted === $scope.sessionCount) {
-          //   console.log($scope.sessionsCompleted === $scope.sessionCount)
-          //   $scope.displayTimerStarted = false
-          //   $scope.displaySessionOver = true
-          //   $interval.cancel(timerIsRunning)
-          //   timerIsRunning = false
-          // }
-
-          // $scope.displaySessionName = 'Break!'
-          // $scope.displayTimeLeft = 60 * $scope.breakLength
-          // $scope.colorFillTime = $scope.breakLength
-          // secs = 60 * $scope.breakLength
 
       } else {
-
         $scope.displayTimeLeft = currentTimer.display(currentTimer.timeLeft)
-                                                      // Guts of the Timer.
-                                                      // And Angular/CSS fill effects.
-
         displayColorFill(currentTimer.timeLeft)
-        // var denom = 60 * $scope.colorFillTime
-        // var perc = Math.abs((secs / denom) * 100 - 100)
-        // // console.log(denom)
-        // // console.log(perc)
-        // $scope.fillColor = '#E3E356'
-        // $scope.fillHeight = perc + '%'
       }
     }
 
@@ -160,23 +92,20 @@
     }
 
     function crossOutPomodoro() {
-      $scope.sessions[$scope.sessionsCompleted] = true
-      $scope.sessionsCompleted++
-      console.log($scope.sessionsCompleted)
+      $scope.pomodoroSessionsArray[$scope.pomodoroSessionsCompleted] = true
+      $scope.pomodoroSessionsCompleted++
+      console.log($scope.pomodoroSessionsCompleted)
     }
 
     function displayColorFill(secs) {
-      var denom = 60 * $scope.colorFillTime
+      var denom = $scope.colorFillTime
       var perc = Math.abs((secs / denom) * 100 - 100)
-      console.log(secs)
-      console.log(denom)
-      console.log(perc)
       $scope.fillColor = '#E3E356'
       $scope.fillHeight = perc + '%'
     }
 
     function finish() {
-      console.log($scope.sessionsCompleted === $scope.sessionCount)
+      console.log($scope.pomodoroSessionsCompleted === $scope.displayPomodoroSetCount)
       $scope.displayTimerStarted = false
       $scope.displaySessionOver = true
       $interval.cancel(currentTimer.intervalId)
@@ -214,8 +143,8 @@
     return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
   }
 
-  Timer.prototype.display = function(timeOfSession) {
-    return this.format(timeOfSession)
+  Timer.prototype.display = function(secs) {
+    return this.format(secs)
   }
 
   Timer.prototype.incrementSessionLength = function(time) {

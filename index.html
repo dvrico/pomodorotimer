@@ -16,7 +16,7 @@
       </div>
 
       <div ng-show="displayTimerStarted">
-        <img ng-src="{{s ? 'images/Xtomato.png' : 'images/colorTomato.png'}}" ng-repeat="s in sessions track by $index" />
+        <img ng-src="{{s ? 'images/Xtomato.png' : 'images/colorTomato.png'}}" ng-repeat="s in pomodoroSessionsArray track by $index" />
       </div>
     </div>
 
@@ -38,10 +38,10 @@
       <div class="timer">
 
         <div ng-hide="displayTimerStarted" class="settings">
-          <div ng-hide="sessionCount" >
+          <div ng-hide="displayPomodoroSetCount" >
             <p>Choose your settings before starting!</p>
           </div>
-          <div ng-show="sessionCount">
+          <div ng-show="displayPomodoroSetCount">
             <div ng-hide="displaySessionOver" id="startButton">
               <p>Start!</p>
             </div>

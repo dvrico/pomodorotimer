@@ -60,9 +60,8 @@
         console.log(currentTimer.name)
         $scope.displayTimerStarted = true
         $scope.pomodoroSessionsArray = Array($scope.displayPomodoroSetCount)
-        updateTimer()
-        currentTimer.isRunning = true
-        currentTimer.intervalId = $interval(updateTimer, 100)
+        //updateTimer()
+        resetAndRun()
       }
     }
 
@@ -74,6 +73,7 @@
 
         switchTimer()
         $scope.colorFillTime = currentTimer.sessionLength
+        resetAndRun()
 
       } else {
         $scope.displayTimeLeft = currentTimer.display(currentTimer.timeLeft)
@@ -82,13 +82,19 @@
     }
 
     function switchTimer() {
-      currentTimer.reset()
       if (currentTimer === sessionTimer) {
         currentTimer = breakTimer
       } else {
         currentTimer = sessionTimer
       }
       $scope.displaySessionName = currentTimer.name
+      currentTimer.timeLeft = currentTimer.sessionLength
+    }
+
+    function resetAndRun() {
+      if (currentTimer.intervalId) $interval.cancel(currentTimer.intervalId);
+      currentTimer.isRunning = true
+      currentTimer.intervalId = $interval(updateTimer, 100)
     }
 
     function crossOutPomodoro() {
@@ -130,10 +136,6 @@
 
   Timer.prototype.pause = function() {
     this.isRunning = false
-  }
-
-  Timer.prototype.reset = function() {
-    this.timeLeft = this.sessionLength
   }
 
   Timer.prototype.format = function(seconds) {

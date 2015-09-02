@@ -8,10 +8,10 @@
 
     // Variables for the amount of pomodoro sessions left/completed.
     $scope.displayPomodoroSetCount = 0
-    $scope.pomodoroSessionsCompleted = 0
-    $scope.pomodoroSessionsArray = []
     $scope.displayTimerStarted = false
     $scope.displaySessionOver = false
+    $scope.pomodoroSessionsArray = []
+    var pomodoroSessionsCompleted = 0
 
     //Timer Objects and their display equivalents.
     var sessionTimer = new Timer('Session', defaultSessionLength)
@@ -70,7 +70,7 @@
       currentTimer.tick()
       if (currentTimer.timeLeft < 0) {
         if (currentTimer.name === 'Session') crossOutPomodoro();
-        if ($scope.pomodoroSessionsCompleted === $scope.displayPomodoroSetCount) finish();
+        if (pomodoroSessionsCompleted === $scope.displayPomodoroSetCount) finish();
 
         switchTimer()
         $scope.colorFillTime = currentTimer.sessionLength
@@ -92,9 +92,9 @@
     }
 
     function crossOutPomodoro() {
-      $scope.pomodoroSessionsArray[$scope.pomodoroSessionsCompleted] = true
-      $scope.pomodoroSessionsCompleted++
-      console.log($scope.pomodoroSessionsCompleted)
+      $scope.pomodoroSessionsArray[pomodoroSessionsCompleted] = true
+      pomodoroSessionsCompleted++
+      console.log(pomodoroSessionsCompleted)
     }
 
     function displayColorFill(secs) {
@@ -105,7 +105,7 @@
     }
 
     function finish() {
-      console.log($scope.pomodoroSessionsCompleted === $scope.displayPomodoroSetCount)
+      console.log(pomodoroSessionsCompleted === $scope.displayPomodoroSetCount)
       $scope.displayTimerStarted = false
       $scope.displaySessionOver = true
       $interval.cancel(currentTimer.intervalId)
@@ -140,7 +140,7 @@
     var d = Number(seconds)
     var m = Math.floor(d % 3600 / 60)
     var s = Math.floor(d % 3600 % 60)
-    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+    return m + ":" + (s < 10 ? "0" : "") + s;
   }
 
   Timer.prototype.display = function(secs) {

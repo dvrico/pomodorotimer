@@ -133,8 +133,16 @@ h1 {
   right: 0;
   z-index: -1;
 }
+/*
+#pomodoroOneImage:hover {
+  background-color: yellow;
+  background-size: 50%;
+  background-size: 3em;
+  background-size: 12px;
+  background-size: auto;
+}
 
-/*.pomodoroCounter:hover {
+.pomodoroCounter:hover {
   background-color: yellow;
 }
 

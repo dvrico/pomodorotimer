@@ -173,4 +173,34 @@
     this.timeLeft = this.sessionLength
   }
 
+  var elPomodoroOneImage = document.getElementById('pomodoroOneImage')
+  var elPomodoroTwoImage = document.getElementById('pomodoroTwoImage')
+  var elPomodoroThreeImage = document.getElementById('pomodoroThreeImage')
+  var elPomodoroFourImage = document.getElementById('pomodoroFourImage')
+/*
+  elPomodoroOneImage.addEventListener('mouseover', function() {
+    elPomodoroOneImage.src='images/tomatoHighlightOne.png'
+  })
+
+  elPomodoroOneImage.addEventListener('mouseout', function() {
+    elPomodoroOneImage.src='images/tomatoOne.png'
+  })
+
+  elPomodoroOneImage.addEventListener('click', function() {
+    elPomodoroOneImage.src='images/tomatoHighlightOne.png'
+  })
+
+  elPomodoroTwoImage.addEventListener('mouseover', function() {
+    elPomodoroTwoImage.src='images/tomatoHighlightTwo.png'
+  })
+
+  elPomodoroThreeImage.addEventListener('mouseover', function() {
+    elPomodoroThreeImage.src='images/tomatoHighlightThree.png'
+  })
+
+  elPomodoroFourImage.addEventListener('mouseover', function() {
+    elPomodoroFourImage.src='images/tomatoHighlightFour.png'
+  })
+*/
+
 }()); // End of IIFE

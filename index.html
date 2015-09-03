@@ -2,10 +2,11 @@
 <html ng-app="myApp" ng-controller="MainController">
   <head>
     <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/master.css">
   </head>
   <body>
-    <h1>Pomodoro!</h1>
+    <h1 class="animated flipInX">Pomodoro!</h1>
 
     <div class="pomodoroCounter">
       <div ng-hide="displayTimerStarted">
@@ -15,10 +16,11 @@
         <button class="pomodoroSelect" type="button"><img src="images/tomatoThree.png" ng-click="setSessions(3)" /></button>
         <button class="pomodoroSelect" type="button"><img src="images/tomatoFour.png" ng-click="setSessions(4)" /></button>
         !-->
-        <img src="images/tomatoOne.png" ng-click="setSessions(1)" />
-        <img src="images/tomatoTwo.png" ng-click="setSessions(2)" />
-        <img src="images/tomatoThree.png" ng-click="setSessions(3)" />
-        <img src="images/tomatoFour.png" ng-click="setSessions(4)" />
+        <!--<div id="pomodoroOneImage" ng-click="setSessions(1)"></div>!-->
+        <img id="pomodoroOneImage" src="images/tomatoOne.png" ng-click="setSessions(1)" />
+        <img id="pomodoroTwoImage" src="images/tomatoTwo.png" ng-click="setSessions(2)" />
+        <img id="pomodoroThreeImage" src="images/tomatoThree.png" ng-click="setSessions(3)" />
+        <img id="pomodoroFourImage" src="images/tomatoFour.png" ng-click="setSessions(4)" />
       </div>
 
       <div ng-show="displayTimerStarted">
@@ -27,7 +29,7 @@
     </div>
 
     <section class="header">
-      <div class="session">
+      <div class="animated fadeInDown session">
         <div class="breakCtrl">
           <p class="number">{{displayBreakLength}}</p>
           <button ng-click="breakLengthChange(-1)" class="minus">-</button><span class="time">  Break Length</span>
@@ -41,7 +43,7 @@
       </div>
     </section>
     <section ng-click="toggleTimer()" class="section">
-      <div class="timer">
+      <div class="animated fadeInDown timer">
 
         <div ng-hide="displayTimerStarted" class="settings">
           <div ng-hide="displayPomodoroSetCount" >

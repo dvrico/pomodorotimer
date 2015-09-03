@@ -48,10 +48,12 @@
 
     $scope.setSessions = function(n) {
       $scope.displayPomodoroSetCount = n
+      $scope.pomodoroSessionsArray = makeArray()
       console.log($scope.displayPomodoroSetCount)
     }
 
-    $scope.toggleTimer = function() {                 // Pause and start the timer.
+    $scope.toggleTimer = function() {
+      console.log($scope.pomodoroSessionsArray)              // Pause and start the timer.
       if (!$scope.displayPomodoroSetCount) return;
       if (currentTimer.isRunning) {
         $interval.cancel(currentTimer.intervalId)
@@ -59,8 +61,10 @@
       } else {
         console.log(currentTimer.name)
         $scope.displayTimerStarted = true
-        $scope.pomodoroSessionsArray = Array($scope.displayPomodoroSetCount)
-        //updateTimer()
+        // if (!$scope.pomodoroSessionsArray) {
+        //   //$scope.pomodoroSessionsArray = Array($scope.displayPomodoroSetCount)
+        //   $scope.pomodoroSessionsArray = makeArray()
+        // }
         resetAndRun()
       }
     }
@@ -81,7 +85,16 @@
       }
     }
 
+    function makeArray() {
+      var arr = []
+      for (var i = 0; i < $scope.displayPomodoroSetCount; i++ ) {
+        arr.push(false)
+      }
+      return arr
+    }
+
     function switchTimer() {
+      $interval.cancel(currentTimer.intervalId)
       if (currentTimer === sessionTimer) {
         currentTimer = breakTimer
       } else {

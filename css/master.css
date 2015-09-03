@@ -133,3 +133,19 @@ h1 {
   right: 0;
   z-index: -1;
 }
+
+/*.pomodoroCounter:hover {
+  background-color: yellow;
+}
+
+.pomodoroSelect:focus {
+  color: yellow;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+
+.pomodoroSelect:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+*/

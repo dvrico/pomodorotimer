@@ -8,7 +8,7 @@
   <body>
     <h1 class="animated flipInX">Pomodoro!</h1>
 
-    <div class="pomodoroCounter">
+    <div class="animated fadeIn pomodoroCounter">
       <div ng-hide="displayTimerStarted">
         <!-- Buttons for CSS
         <button class="pomodoroSelect" type="button"><img src="images/tomatoOne.png" ng-click="setSessions(1)" /></button>
@@ -29,7 +29,7 @@
     </div>
 
     <section class="header">
-      <div class="animated fadeInDown session">
+      <div class="animated fadeIn session">
         <div class="breakCtrl">
           <p class="number">{{displayBreakLength}}</p>
           <button ng-click="breakLengthChange(-1)" class="minus">-</button><span class="time">  Break Length</span>
@@ -43,7 +43,7 @@
       </div>
     </section>
     <section ng-click="toggleTimer()" class="section">
-      <div class="animated fadeInDown timer">
+      <div class="animated fadeIn timer">
 
         <div ng-hide="displayTimerStarted" class="settings">
           <div ng-hide="displayPomodoroSetCount" >
@@ -66,7 +66,7 @@
       </div>
     </section>
 
-    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="resources/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

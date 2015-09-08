@@ -3,8 +3,8 @@
 
   myApp.controller('MainController', ['$scope', '$interval', function($scope, $interval){
 
-    var defaultBreakLength = 60
-    var defaultSessionLength = 60
+    var defaultBreakLength = 300        // 5:00 min
+    var defaultSessionLength = 1500     // 25:00 min
 
     // Variables for the amount of pomodoro sessions left/completed.
     $scope.displayPomodoroSetCount = 0
@@ -53,7 +53,7 @@
     }
 
     $scope.toggleTimer = function() {
-      console.log($scope.pomodoroSessionsArray)              // Pause and start the timer.
+      console.log($scope.pomodoroSessionsArray)            // Pause and start the timer.
       if (!$scope.displayPomodoroSetCount) return;
       if (currentTimer.isRunning) {
         $interval.cancel(currentTimer.intervalId)
@@ -61,10 +61,6 @@
       } else {
         console.log(currentTimer.name)
         $scope.displayTimerStarted = true
-        // if (!$scope.pomodoroSessionsArray) {
-        //   //$scope.pomodoroSessionsArray = Array($scope.displayPomodoroSetCount)
-        //   $scope.pomodoroSessionsArray = makeArray()
-        // }
         resetAndRun()
       }
     }
@@ -107,7 +103,7 @@
     function resetAndRun() {
       if (currentTimer.intervalId) $interval.cancel(currentTimer.intervalId);
       currentTimer.isRunning = true
-      currentTimer.intervalId = $interval(updateTimer, 100)
+      currentTimer.intervalId = $interval(updateTimer, 1000)
     }
 
     function crossOutPomodoro() {
@@ -177,7 +173,7 @@
   var elPomodoroTwoImage = document.getElementById('pomodoroTwoImage')
   var elPomodoroThreeImage = document.getElementById('pomodoroThreeImage')
   var elPomodoroFourImage = document.getElementById('pomodoroFourImage')
-/*
+/* //Ignore this nonsense
   elPomodoroOneImage.addEventListener('mouseover', function() {
     elPomodoroOneImage.src='images/tomatoHighlightOne.png'
   })

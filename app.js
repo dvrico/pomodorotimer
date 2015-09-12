@@ -39,7 +39,6 @@
         breakTimer.incrementSessionLength(time)
         $scope.displayBreakLength = breakTimer.display(breakTimer.sessionLength)
         $scope.colorFillTime = currentTimer.sessionLength
-        console.log(breakTimer.sessionLength)
       }
     }
 
@@ -48,12 +47,10 @@
         sessionTimer.incrementSessionLength(time)
         $scope.displaySessionLength = sessionTimer.display(sessionTimer.sessionLength)
         $scope.colorFillTime = currentTimer.sessionLength
-        console.log(sessionTimer.sessionLength)
       }
     }
 
-    $scope.setSessions = function(number) {
-      //$scope.elTomatoImage = document.getElementById('pomodoroThreeImage')
+    $scope.setSessionsAndHighlight = function(number) {
       $scope.displayPomodoroSetCount = number
       $scope.pomodoroSessionsArray = makeArray()
       switch (number) {
@@ -80,14 +77,12 @@
       console.log($scope.displayPomodoroSetCount)
     }
 
-    $scope.toggleTimer = function() {
-      console.log($scope.pomodoroSessionsArray)            // Pause and start the timer.
+    $scope.toggleTimer = function() {               // Pause and start Timer.
       if (!$scope.displayPomodoroSetCount) return;
       if (currentTimer.isRunning) {
         $interval.cancel(currentTimer.intervalId)
         currentTimer.isRunning = false
       } else {
-        console.log(currentTimer.name)
         $scope.displayTimerStarted = true
         resetAndRun()
       }
@@ -134,10 +129,16 @@
       currentTimer.intervalId = $interval(updateTimer, 1000)
     }
 
+    function resetHighlights() {
+        $scope.elPomodoroOneImage.src = "images/tomatoOne.png"
+        $scope.elPomodoroTwoImage.src = "images/tomatoTwo.png"
+        $scope.elPomodoroThreeImage.src = "images/tomatoThree.png"
+        $scope.elPomodoroFourImage.src = "images/tomatoFour.png"
+    }
+
     function crossOutPomodoro() {
       $scope.pomodoroSessionsArray[pomodoroSessionsCompleted] = true
       pomodoroSessionsCompleted++
-      console.log(pomodoroSessionsCompleted)
     }
 
     function displayColorFill(secs) {
@@ -154,6 +155,42 @@
       $interval.cancel(currentTimer.intervalId)
       currentTimer.isRunning = false
     }
+
+
+    //Ignore this nonsense
+/*
+    $scope.elPomodoroOneImage.addEventListener('mouseover', function() {
+        $scope.elPomodoroOneImage.src='images/tomatoHighlightOne.png'
+    })
+
+    $scope.elPomodoroOneImage.addEventListener('mouseout', function() {
+        $scope.elPomodoroOneImage.src='images/tomatoOne.png'
+    })
+
+    $scope.elPomodoroTwoImage.addEventListener('mouseover', function() {
+        $scope.elPomodoroTwoImage.src='images/tomatoHighlightTwo.png'
+    })
+
+    $scope.elPomodoroTwoImage.addEventListener('mouseout', function() {
+        $scope.elPomodoroTwoImage.src='images/tomatoTwo.png'
+    })
+
+    $scope.elPomodoroThreeImage.addEventListener('mouseover', function() {
+        $scope.elPomodoroThreeImage.src='images/tomatoHighlightThree.png'
+    })
+
+    $scope.elPomodoroThreeImage.addEventListener('mouseout', function() {
+        $scope.elPomodoroThreeImage.src='images/tomatoThree.png'
+    })
+
+    $scope.elPomodoroFourImage.addEventListener('mouseover', function() {
+        $scope.elPomodoroFourImage.src='images/tomatoHighlightFour.png'
+    })
+
+    $scope.elPomodoroFourImage.addEventListener('mouseout', function() {
+        $scope.elPomodoroFourImage.src='images/tomatoFour.png'
+    })
+*/
 
   }]) // End of MainController
 
@@ -196,32 +233,5 @@
     }
     this.timeLeft = this.sessionLength
   }
-
-
-/* //Ignore this nonsense
-  elPomodoroOneImage.addEventListener('mouseover', function() {
-    elPomodoroOneImage.src='images/tomatoHighlightOne.png'
-  })
-
-  elPomodoroOneImage.addEventListener('mouseout', function() {
-    elPomodoroOneImage.src='images/tomatoOne.png'
-  })
-
-  elPomodoroOneImage.addEventListener('click', function() {
-    elPomodoroOneImage.src='images/tomatoHighlightOne.png'
-  })
-
-  elPomodoroTwoImage.addEventListener('mouseover', function() {
-    elPomodoroTwoImage.src='images/tomatoHighlightTwo.png'
-  })
-
-  elPomodoroThreeImage.addEventListener('mouseover', function() {
-    elPomodoroThreeImage.src='images/tomatoHighlightThree.png'
-  })
-
-  elPomodoroFourImage.addEventListener('mouseover', function() {
-    elPomodoroFourImage.src='images/tomatoHighlightFour.png'
-  })
-*/
 
 }()); // End of IIFE

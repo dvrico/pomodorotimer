@@ -13,6 +13,12 @@
     $scope.pomodoroSessionsArray = []
     var pomodoroSessionsCompleted = 0
 
+    // Variables for highlighting pomodoros
+    $scope.elPomodoroOneImage = document.getElementById('pomodoroOneImage')
+    $scope.elPomodoroTwoImage = document.getElementById('pomodoroTwoImage')
+    $scope.elPomodoroThreeImage = document.getElementById('pomodoroThreeImage')
+    $scope.elPomodoroFourImage = document.getElementById('pomodoroFourImage')
+
     //Timer Objects and their display equivalents.
     var sessionTimer = new Timer('Session', defaultSessionLength)
     $scope.displaySessionLength = sessionTimer.display(defaultSessionLength)
@@ -46,9 +52,31 @@
       }
     }
 
-    $scope.setSessions = function(n) {
-      $scope.displayPomodoroSetCount = n
+    $scope.setSessions = function(number) {
+      //$scope.elTomatoImage = document.getElementById('pomodoroThreeImage')
+      $scope.displayPomodoroSetCount = number
       $scope.pomodoroSessionsArray = makeArray()
+      switch (number) {
+          case 1:
+            resetHighlights()
+            $scope.elPomodoroOneImage.src = "images/tomatoHighlightOne.png"
+            break;
+
+          case 2:
+            resetHighlights()
+            $scope.elPomodoroTwoImage.src = "images/tomatoHighlightTwo.png"
+            break;
+
+          case 3:
+            resetHighlights()
+            $scope.elPomodoroThreeImage.src = "images/tomatoHighlightThree.png"
+            break;
+
+          default:
+            resetHighlights()
+            $scope.elPomodoroFourImage.src = "images/tomatoHighlightFour.png"
+            break;
+      }
       console.log($scope.displayPomodoroSetCount)
     }
 
@@ -169,10 +197,7 @@
     this.timeLeft = this.sessionLength
   }
 
-  var elPomodoroOneImage = document.getElementById('pomodoroOneImage')
-  var elPomodoroTwoImage = document.getElementById('pomodoroTwoImage')
-  var elPomodoroThreeImage = document.getElementById('pomodoroThreeImage')
-  var elPomodoroFourImage = document.getElementById('pomodoroFourImage')
+
 /* //Ignore this nonsense
   elPomodoroOneImage.addEventListener('mouseover', function() {
     elPomodoroOneImage.src='images/tomatoHighlightOne.png'

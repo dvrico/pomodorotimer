@@ -10,17 +10,10 @@
 
     <div class="animated fadeIn pomodoroCounter">
       <div ng-hide="displayTimerStarted">
-        <!-- Buttons for CSS
-        <button class="pomodoroSelect" type="button"><img src="images/tomatoOne.png" ng-click="setSessions(1)" /></button>
-        <button class="pomodoroSelect" type="button"><img src="images/tomatoTwo.png" ng-click="setSessions(2)" /></button>
-        <button class="pomodoroSelect" type="button"><img src="images/tomatoThree.png" ng-click="setSessions(3)" /></button>
-        <button class="pomodoroSelect" type="button"><img src="images/tomatoFour.png" ng-click="setSessions(4)" /></button>
-        !-->
-        <!--<div id="pomodoroOneImage" ng-click="setSessions(1)"></div>!-->
-        <img id="pomodoroOneImage" src="images/tomatoOne.png" ng-click="setSessionsAndHighlight(1)" />
-        <img id="pomodoroTwoImage" src="images/tomatoTwo.png" ng-click="setSessionsAndHighlight(2)" />
-        <img id="pomodoroThreeImage" src="images/tomatoThree.png" ng-click="setSessionsAndHighlight(3)" />
-        <img id="pomodoroFourImage" src="images/tomatoFour.png" ng-click="setSessionsAndHighlight(4)" />
+        <img id="pomodoroOneImage" src="images/tomatoOne.png" ng-click="setSessionsAndHighlight(1)" ng-mouseover="hoverAndHighlight(1)" />
+        <img id="pomodoroTwoImage" src="images/tomatoTwo.png" ng-click="setSessionsAndHighlight(2)" ng-mouseover="hoverAndHighlight(2)"/>
+        <img id="pomodoroThreeImage" src="images/tomatoThree.png" ng-click="setSessionsAndHighlight(3)" ng-mouseover="hoverAndHighlight(3)"/>
+        <img id="pomodoroFourImage" src="images/tomatoFour.png" ng-click="setSessionsAndHighlight(4)" ng-mouseover="hoverAndHighlight(4)"/>
       </div>
 
       <div ng-show="displayTimerStarted">

@@ -19,6 +19,11 @@
     $scope.elPomodoroThreeImage = document.getElementById('pomodoroThreeImage')
     $scope.elPomodoroFourImage = document.getElementById('pomodoroFourImage')
 
+    $scope.displayTomatoOneIsClicked = false
+    $scope.displayTomatoTwoIsClicked = false
+    $scope.displayTomatoThreeIsClicked = false
+    $scope.displayTomatoFourIsClicked = false
+
     //Timer Objects and their display equivalents.
     var sessionTimer = new Timer('Session', defaultSessionLength)
     $scope.displaySessionLength = sessionTimer.display(defaultSessionLength)
@@ -53,28 +58,82 @@
     $scope.setSessionsAndHighlight = function(number) {
       $scope.displayPomodoroSetCount = number
       $scope.pomodoroSessionsArray = makeArray()
+
+      resetHighlights()
       switch (number) {
           case 1:
-            resetHighlights()
+            $scope.displayTomatoOneIsClicked = true
             $scope.elPomodoroOneImage.src = "images/tomatoHighlightOne.png"
             break;
 
           case 2:
-            resetHighlights()
+            $scope.displayTomatoTwoIsClicked = true
             $scope.elPomodoroTwoImage.src = "images/tomatoHighlightTwo.png"
             break;
 
           case 3:
-            resetHighlights()
+            $scope.displayTomatoThreeIsClicked = true
             $scope.elPomodoroThreeImage.src = "images/tomatoHighlightThree.png"
             break;
 
           default:
-            resetHighlights()
+            $scope.displayTomatoFourIsClicked = true
             $scope.elPomodoroFourImage.src = "images/tomatoHighlightFour.png"
             break;
       }
       console.log($scope.displayPomodoroSetCount)
+    }
+
+    function resetHighlights() {
+        $scope.elPomodoroOneImage.src = "images/tomatoOne.png"
+        $scope.elPomodoroTwoImage.src = "images/tomatoTwo.png"
+        $scope.elPomodoroThreeImage.src = "images/tomatoThree.png"
+        $scope.elPomodoroFourImage.src = "images/tomatoFour.png"
+        $scope.displayTomatoOneIsClicked = false
+        $scope.displayTomatoTwoIsClicked = false
+        $scope.displayTomatoThreeIsClicked = false
+        $scope.displayTomatoFourIsClicked = false
+
+    }
+
+    $scope.hoverAndHighlight = function(number) {
+        switch (number) {
+            case 1:
+              $scope.elPomodoroOneImage.src='images/tomatoHighlightOne.png'
+              $scope.elPomodoroOneImage.addEventListener('mouseout', function() {
+                  if(!($scope.displayTomatoOneIsClicked)) {
+                      $scope.elPomodoroOneImage.src='images/tomatoOne.png'
+                  }
+              })
+              break;
+
+            case 2:
+              $scope.elPomodoroTwoImage.src='images/tomatoHighlightTwo.png'
+              $scope.elPomodoroTwoImage.addEventListener('mouseout', function() {
+                  if(!($scope.displayTomatoTwoIsClicked)) {
+                      $scope.elPomodoroTwoImage.src='images/tomatoTwo.png'
+                  }
+              })
+              break;
+
+            case 3:
+              $scope.elPomodoroThreeImage.src='images/tomatoHighlightThree.png'
+              $scope.elPomodoroThreeImage.addEventListener('mouseout', function() {
+                  if(!($scope.displayTomatoThreeIsClicked)) {
+                      $scope.elPomodoroThreeImage.src='images/tomatoThree.png'
+                  }
+              })
+              break;
+
+            default:
+              $scope.elPomodoroFourImage.src='images/tomatoHighlightFour.png'
+              $scope.elPomodoroFourImage.addEventListener('mouseout', function() {
+                  if(!($scope.displayTomatoFourIsClicked)) {
+                      $scope.elPomodoroFourImage.src='images/tomatoFour.png'
+                  }
+              })
+              break;
+        }
     }
 
     $scope.toggleTimer = function() {               // Pause and start Timer.
@@ -127,13 +186,6 @@
       if (currentTimer.intervalId) $interval.cancel(currentTimer.intervalId);
       currentTimer.isRunning = true
       currentTimer.intervalId = $interval(updateTimer, 1000)
-    }
-
-    function resetHighlights() {
-        $scope.elPomodoroOneImage.src = "images/tomatoOne.png"
-        $scope.elPomodoroTwoImage.src = "images/tomatoTwo.png"
-        $scope.elPomodoroThreeImage.src = "images/tomatoThree.png"
-        $scope.elPomodoroFourImage.src = "images/tomatoFour.png"
     }
 
     function crossOutPomodoro() {

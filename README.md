@@ -15,6 +15,5 @@ Use the timer by going [here](http://dvrico.github.io/pomodorotimer/). The sessi
 
 ### What else needs to be added
 - Sound for the start and end of sessions
-- CSS highlighting for the pomodoros
 - Reset button (to get around this just refresh the browser).
 - Make this a native app using nw.js

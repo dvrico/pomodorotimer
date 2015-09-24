@@ -162,3 +162,32 @@ footer {
 footer > h4 {
     font-size: 20px;
 }
+
+@media screen and (max-device-width: 375px) {
+    h1 {
+        font-size: 10em;
+    }
+    .header {
+        padding: 40px;
+    }
+    .header .session {
+        font-size: 1.3em;
+    }
+    .section {
+        margin: 15%;
+    }
+    .section .timer {
+        width: 600px;
+        height: 600px;
+    }
+    .section .settings {
+        font-size: 1em;
+        padding-top: 3em;
+    }
+
+    .section .title {
+        line-height: 100px;
+        font-size: 1.5em;
+        margin-top: 22%;
+    }
+}

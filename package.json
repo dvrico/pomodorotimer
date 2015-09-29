@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "start": "nw"
   },
   "name": "pomodorotimer",
   "description": "",
